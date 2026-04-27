@@ -1,0 +1,23 @@
+VSCODE
+Flutter
+Dart
+Awesome Flutter Snippets
+Flutter Widget Snippets
+Nuget Gallery
+.NET Install Tool
+C#
+C# Dev kit
+C# Extensions
+IntelliCode for C# Dev Kit
+
+Flutter
+dio
+
+C#
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Design
+Npgsql.EntityFrameworkCore.PostgreSQL
+Swashbuckle.AspNetCore
+Swashbuckle.AspNetCore.Swagger
+Swashbuckle.AspNetCore.SwaggerGen
+Swashbuckle.AspNetCore.SwaggerUI

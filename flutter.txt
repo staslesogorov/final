@@ -1,0 +1,32 @@
+Расширение
+Flutter
+Dart
+Awesome Flutter Snippets
+Flutter Widget Snippets
+
+Библиотеки flutter
+dio
+
+Установка библиотек
+flutter pub add NAME
+
+Зависимости
+sudo dnf install cmake
+sudo dnf install ninja-build
+sudo dnf install clang
+sudo dnf install gtk3-devel
+
+Подготовка веб
+which chromium-browser
+--/usr/bin/chromium-browser
+
+flutter doctor
+--[✗] Chrome - develop for the web (Cannot find Chrome executable at google-chrome)
+    ! Cannot find Chrome. Try setting CHROME_EXECUTABLE to a Chrome executable.
+
+flutter config --chrome-executable=/usr/bin/chromium-browser
+
+Запуск
+flutter clean
+flutter pub get
+flutter run -d chrome или flutter run -d linux
