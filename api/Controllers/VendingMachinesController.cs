@@ -1,32 +1,26 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using api.Data;
+using api.Dto;
 using api.Models;
-using api;
 
 namespace api.Controllers;
 
+[Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class VendingMachinesController(AppDb db) : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetAll()
-    {
-        var vendingMachines = db.VendingMachines.ToList();
-        return Ok(vendingMachines);
-    }
+    public IActionResult GetAll() =>
+        Ok(new ApiResponse<List<VendingMachine>> { Data =  db.VendingMachines.ToList() });
 
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        var vendingMachine = db.VendingMachines.FirstOrDefault(vm => vm.Id == id);
-        if (vendingMachine == null)
-        {
-            return NotFound();
-        }
-        return Ok(vendingMachine);
+        var vm = db.VendingMachines.FirstOrDefault(v => v.Id == id);
+        if (vm == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });
+        return Ok(new ApiResponse<VendingMachine> { Data = vm });
     }
 
     [HttpPost]
@@ -34,40 +28,33 @@ public class VendingMachinesController(AppDb db) : ControllerBase
     {
         db.VendingMachines.Add(vm);
         db.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = vm.Id }, vm);
+        return CreatedAtAction(nameof(Get), new { id = vm.Id }, new ApiResponse<VendingMachine> { Data = vm, Message = "Автомат создан" });
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, VendingMachine vm)
     {
-        var vendingMachine = db.VendingMachines.FirstOrDefault(vm => vm.Id == id);
-        if (vendingMachine == null)
-        {
-            return NotFound();
-        }
+        var v = db.VendingMachines.FirstOrDefault(v => v.Id == id);
+        if (v == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });
 
-        vendingMachine.Place = vm.Place;
-        vendingMachine.Model = vm.Model;
-        vendingMachine.Type = vm.Type;
-        vendingMachine.Status = vm.Status;
-        vendingMachine.Date = vm.Date;
-        vendingMachine.ServiceDate = vm.ServiceDate;
-        vendingMachine.Earning = vm.Earning;
-
+        v.Place = vm.Place;
+        v.Model = vm.Model;
+        v.Type = vm.Type;
+        v.Status = vm.Status;
+        v.Date = vm.Date;
+        v.ServiceDate = vm.ServiceDate;
+        v.Earning = vm.Earning;
         db.SaveChanges();
-        return Ok(vendingMachine);
+        return Ok(new ApiResponse<VendingMachine> { Data = v, Message = "Автомат обновлён" });
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var vendingMachine = db.VendingMachines.FirstOrDefault(vm => vm.Id == id);
-        if (vendingMachine == null)
-        {
-            return NotFound();
-        }
-        db.VendingMachines.Remove(vendingMachine);
+        var vm = db.VendingMachines.FirstOrDefault(v => v.Id == id);
+        if (vm == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });
+        db.VendingMachines.Remove(vm);
         db.SaveChanges();
-        return Ok(vendingMachine);
+        return Ok(new ApiResponse<VendingMachine> { Data = vm, Message = "Автомат удалён" });
     }
 }

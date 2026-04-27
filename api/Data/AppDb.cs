@@ -10,7 +10,7 @@ public class AppDb : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder o) =>
-        o.UseNpgsql("Host=localhost;Port=5432;Database=DBVENDING;Username=postgres;Password=postgres");
+        o.UseNpgsql("Host=localhost;Port=5432;Database=DBVENDING;Username=staslesogorov;Password=2505");
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Sale> Sales { get; set; }

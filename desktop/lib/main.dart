@@ -1,6 +1,7 @@
 import 'package:desktop/components/header.dart';
 import 'package:desktop/components/menu.dart';
 import 'package:desktop/components/nav.dart';
+import 'package:desktop/pages/login_page.dart';
 import 'package:desktop/pages/main_page.dart';
 import 'package:desktop/pages/pages.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Layout());
+    return MaterialApp(
+      home: LoginPage(),
+      routes: {'/home': (context) => Layout()},
+    );
   }
 }
 

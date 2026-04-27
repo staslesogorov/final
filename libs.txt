@@ -21,3 +21,5 @@ Swashbuckle.AspNetCore
 Swashbuckle.AspNetCore.Swagger
 Swashbuckle.AspNetCore.SwaggerGen
 Swashbuckle.AspNetCore.SwaggerUI
+Microsoft.AspNetCore.Authentication.JwtBearer
+BCrypt.Net-Next
