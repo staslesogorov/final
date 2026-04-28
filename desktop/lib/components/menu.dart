@@ -18,7 +18,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  bool open = false;
+  bool open = true;
 
   @override
   Widget build(BuildContext context) {

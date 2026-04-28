@@ -25,6 +25,6 @@ public class AuthController(AppDb db) : ControllerBase
         var token = new JwtSecurityToken(
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
-        return Ok(new ApiResponse<string> {  Data = new JwtSecurityTokenHandler().WriteToken(token), Message = "Успешный вход" });
+        return Ok(new ApiResponse<Object> {  Data = new { token = new JwtSecurityTokenHandler().WriteToken(token), user = user }, Message = "Успешный вход" });
     }
 }

@@ -1,4 +1,5 @@
 import 'package:desktop/api.dart';
+import 'package:desktop/user.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,12 @@ class _LoginPageState extends State<LoginPage> {
         '/auth/login',
         data: {'login': login.text, 'password': pass.text},
       );
-      setToken(res.data['data']);
+      setToken(res.data['data']['token']);
+      final user = User(
+        fio: res.data['data']['user']['fio'],
+        role: res.data['data']['user']['role'],
+      );
+      setUser(user);
       Navigator.pushReplacementNamed(context, '/home');
     } on DioException catch (e) {
       setState(() {

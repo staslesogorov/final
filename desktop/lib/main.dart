@@ -1,6 +1,7 @@
 import 'package:desktop/components/header.dart';
 import 'package:desktop/components/menu.dart';
 import 'package:desktop/components/nav.dart';
+import 'package:desktop/user.dart';
 import 'package:desktop/pages/login_page.dart';
 import 'package:desktop/pages/main_page.dart';
 import 'package:desktop/pages/pages.dart';
@@ -40,12 +41,14 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   String selectedPage = "Главная";
 
+  User user = getUser()!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Header(),
+          Header(user: user),
           Nav(page: selectedPage),
           Expanded(
             child: Row(
