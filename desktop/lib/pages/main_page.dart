@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-final List<String> items = [
-  "Эффективность сети",
-  "Состояние сети",
-  "Сводка",
-  "Динамика продаж за последние 10 дней",
-  "Новости",
-];
+final Map<String, Widget> items = {
+  "Эффективность сети": Text("Эффективность сети"),
+  "Состояние сети": Text("Состояние сети"),
+  "Сводка": Text("Сводка"),
+  "Динамика продаж за последние 10 дней": Text(
+    "Динамика продаж за последние 10 дней",
+  ),
+  "Новости": Text("Новости"),
+};
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -29,8 +31,11 @@ class MainPage extends StatelessWidget {
             child: Container(
               child: GridView.count(
                 crossAxisCount: 3,
-                children: List.generate(5, (index) {
-                  return Card(title: items[index]);
+                children: List.generate(items.length, (index) {
+                  return Card(
+                    title: items.keys.toList()[index],
+                    child: items.values.toList()[index],
+                  );
                 }),
               ),
             ),
@@ -42,8 +47,9 @@ class MainPage extends StatelessWidget {
 }
 
 class Card extends StatelessWidget {
-  const Card({super.key, required this.title});
+  const Card({super.key, required this.title, required this.child});
   final String title;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +62,7 @@ class Card extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: Text(title, style: TextStyle(fontSize: 18)),
           ),
-          Expanded(child: Center(child: Text(title))),
+          Expanded(child: Center(child: child)),
         ],
       ),
     );

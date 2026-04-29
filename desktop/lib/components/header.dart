@@ -48,7 +48,6 @@ class DropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     return Container(
       decoration: BoxDecoration(
         border: Border(left: BorderSide(color: Colors.grey)),

@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 
-final Map<String, IconData> navItems = {
-  "Главная": Icons.home,
-  "Монитор ТА": Icons.monitor,
-  "Детальный отчеты": Icons.edit_document,
-  "Учет ТМЦ": Icons.shopping_cart,
-  "Администрирование": Icons.settings,
+final Map<String, List> navItems = {
+  "Главная": [Icons.home, false],
+  "Монитор ТА": [Icons.monitor, false],
+  "Детальный отчеты": [Icons.edit_document, true],
+  "Учет ТМЦ": [Icons.shopping_cart, true],
+  "Администрирование": [Icons.settings, true],
+};
+
+final Map<String, List> subItems = {
+  "Детальный отчеты": [],
+  "Учет ТМЦ": [],
+  "Администрирование": [
+    "Торговые автоматы",
+    "Компании",
+    "Пользователи",
+    "Модемы",
+    "Дополнительные",
+  ],
 };
 
 class Menu extends StatefulWidget {
@@ -35,9 +47,10 @@ class _MenuState extends State<Menu> {
               .map(
                 (e) => MenuItem(
                   name: e.key,
-                  icon: e.value,
+                  icon: e.value[0],
                   open: open,
                   onTap: () => widget.onSelect(e.key),
+                  openable: e.value[1],
                 ),
               )
               .toList(),
@@ -47,11 +60,12 @@ class _MenuState extends State<Menu> {
   }
 }
 
-class MenuItem extends StatelessWidget {
+class MenuItem extends StatefulWidget {
   final String name;
   final IconData icon;
   final bool open;
   final VoidCallback onTap;
+  final bool openable;
 
   const MenuItem({
     super.key,
@@ -59,21 +73,74 @@ class MenuItem extends StatelessWidget {
     required this.icon,
     required this.open,
     required this.onTap,
+    required this.openable,
   });
+
+  @override
+  State<MenuItem> createState() => _MenuItemState();
+}
+
+class _MenuItemState extends State<MenuItem> {
+  bool subOpen = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        spacing: 20,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: Colors.white),
-          if (open)
-            Text(name, style: TextStyle(fontSize: 18, color: Colors.white)),
-        ],
+      onTap: widget.onTap,
+      child: GestureDetector(
+        onTap: () => {
+          setState(() {
+            if (widget.openable) subOpen = !subOpen;
+          }),
+        },
+        child: Column(
+          children: [
+            Row(
+              spacing: 20,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(widget.icon, color: Colors.white),
+                if (widget.open)
+                  Text(
+                    widget.name,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                if (widget.openable && widget.open)
+                  Icon(
+                    subOpen
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                  ),
+              ],
+            ),
+            if (subOpen)
+              Column(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: subItems[widget.name]!
+                    .map(
+                      (e) => Row(
+                        spacing: 20,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+          ],
+        ),
       ),
     );
   }
