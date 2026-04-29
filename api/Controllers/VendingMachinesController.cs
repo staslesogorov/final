@@ -16,7 +16,7 @@ public class VendingMachinesController(AppDb db) : ControllerBase
         Ok(new ApiResponse<List<VendingMachine>> { Data =  db.VendingMachines.ToList() });
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Get(Guid id)
     {
         var vm = db.VendingMachines.FirstOrDefault(v => v.Id == id);
         if (vm == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });
@@ -32,24 +32,18 @@ public class VendingMachinesController(AppDb db) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, VendingMachine vm)
+    public IActionResult Update(Guid id, VendingMachine vm)
     {
         var v = db.VendingMachines.FirstOrDefault(v => v.Id == id);
         if (v == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });
 
-        v.Place = vm.Place;
-        v.Model = vm.Model;
-        v.Type = vm.Type;
-        v.Status = vm.Status;
-        v.Date = vm.Date;
-        v.ServiceDate = vm.ServiceDate;
-        v.Earning = vm.Earning;
+        db.VendingMachines.Update(vm);
         db.SaveChanges();
         return Ok(new ApiResponse<VendingMachine> { Data = v, Message = "Автомат обновлён" });
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
         var vm = db.VendingMachines.FirstOrDefault(v => v.Id == id);
         if (vm == null) return NotFound(new ApiResponse<VendingMachine> { Error = "Автомат не найден" });

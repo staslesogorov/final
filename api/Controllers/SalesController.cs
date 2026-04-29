@@ -16,7 +16,7 @@ public class SalesController(AppDb db) : ControllerBase
         Ok(new ApiResponse<List<Sale>> { Data = db.Sales.ToList() });
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Get(Guid id)
     {
         var sale = db.Sales.FirstOrDefault(s => s.Id == id);
         if (sale == null) return NotFound(new ApiResponse<Sale> { Error = "Продажа не найдена" });
@@ -32,23 +32,18 @@ public class SalesController(AppDb db) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Sale s)
+    public IActionResult Update(Guid id, Sale s)
     {
         var sale = db.Sales.FirstOrDefault(s => s.Id == id);
         if (sale == null) return NotFound(new ApiResponse<Sale> { Error = "Продажа не найдена" });
 
-        sale.VendingMachineId = s.VendingMachineId;
-        sale.ProductId = s.ProductId;
-        sale.Count = s.Count;
-        sale.Earning = s.Earning;
-        sale.Date = s.Date;
-        sale.PaymentMethod = s.PaymentMethod;
+        db.Sales.Update(s);
         db.SaveChanges();
         return Ok(new ApiResponse<Sale> { Data = sale, Message = "Продажа обновлена" });
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
         var sale = db.Sales.FirstOrDefault(s => s.Id == id);
         if (sale == null) return NotFound(new ApiResponse<Sale> { Error = "Продажа не найдена" });

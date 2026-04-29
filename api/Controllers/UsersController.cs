@@ -17,7 +17,7 @@ public class UsersController(AppDb db) : ControllerBase
 
     [Authorize]
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Get(Guid id)
     {
         var user = db.Users.FirstOrDefault(u => u.Id == id);
         if (user == null) return NotFound(new ApiResponse<User> { Error = "Пользователь не найден" });
@@ -35,22 +35,19 @@ public class UsersController(AppDb db) : ControllerBase
 
     [Authorize]
     [HttpPut("{id}")]
-    public IActionResult Update(int id, User u)
+    public IActionResult Update(Guid id, User u)
     {
         var user = db.Users.FirstOrDefault(u => u.Id == id);
         if (user == null) return NotFound(new ApiResponse<User> { Error = "Пользователь не найден" });
 
-        user.FIO = u.FIO;
-        user.Email = u.Email;
-        user.Phone = u.Phone;
-        user.Role = u.Role;
+        db.Users.Update(u);
         db.SaveChanges();
         return Ok(new ApiResponse<User> { Data = user, Message = "Пользователь обновлён" });
     }
 
     [Authorize]
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
         var user = db.Users.FirstOrDefault(u => u.Id == id);
         if (user == null) return NotFound(new ApiResponse<User> { Error = "Пользователь не найден" });

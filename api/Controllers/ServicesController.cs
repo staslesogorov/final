@@ -16,7 +16,7 @@ public class ServicesController(AppDb db) : ControllerBase
         Ok(new ApiResponse<List<Service>> { Data = db.Services.ToList() });
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Get(Guid id)
     {
         var service = db.Services.FirstOrDefault(s => s.Id == id);
         if (service == null) return NotFound(new ApiResponse<Service> { Error = "Сервис не найден" });
@@ -32,22 +32,18 @@ public class ServicesController(AppDb db) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Service s)
+    public IActionResult Update(Guid id, Service s)
     {
         var service = db.Services.FirstOrDefault(s => s.Id == id);
         if (service == null) return NotFound(new ApiResponse<Service> { Error = "Сервис не найден" });
 
-        service.VendingMachineId = s.VendingMachineId;
-        service.Date = s.Date;
-        service.Description = s.Description;
-        service.Error = s.Error;
-        service.UserId = s.UserId;
+        db.Services.Update(s);
         db.SaveChanges();
         return Ok(new ApiResponse<Service> { Data = service, Message = "Сервис обновлён" });
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
         var service = db.Services.FirstOrDefault(s => s.Id == id);
         if (service == null) return NotFound(new ApiResponse<Service> { Error = "Сервис не найден" });

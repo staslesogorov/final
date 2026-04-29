@@ -7,13 +7,13 @@ namespace api.Models
 {
     public class Service
     {
-        public int Id {get;set;}
-        public int VendingMachineId {get;set;}
+    public Guid Id {get;set ;} = Guid.NewGuid();
+        public Guid VendingMachineId {get;set;}
         public VendingMachine? VendingMachine {get;set;}
         public DateTime Date {get;set;}
         public string Description {get;set;} = string.Empty;
         public string Error {get;set;} = string.Empty;
-        public int UserId {get;set;}
+        public Guid UserId {get;set;}
         public User? User {get;set;}
     }
 }

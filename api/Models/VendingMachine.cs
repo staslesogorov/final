@@ -7,7 +7,7 @@ namespace api.Models;
 
 public class VendingMachine
 {
-    public int Id {get;set ;} 
+    public Guid Id {get;set ;} = Guid.NewGuid();
     public string Place {get;set;} = string.Empty;
     public string Model {get;set;} = string.Empty;
     public string Type {get;set;} = string.Empty;

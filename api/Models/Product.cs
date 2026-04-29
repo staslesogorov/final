@@ -7,12 +7,15 @@ namespace api.Models
 {
     public class Product
     {
-        public int Id {get;set;}
+        public Guid Id {get;set ;} = Guid.NewGuid();
         public string Name {get;set;} = string.Empty;
         public string Description {get;set;} = string.Empty;
         public decimal Price {get;set;}
         public int Count {get;set;}
         public int MinCount {get;set;}
-        public string Tendetion {get;set;} = string.Empty;
+        public int Tendetion {get;set;}
+
+        public Guid VendingMachineId {get;set;}
+        public VendingMachine? VendingMachine {get;set;}
     }
 }

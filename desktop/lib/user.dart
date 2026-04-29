@@ -1,8 +1,8 @@
 class User {
-  final String fio;
+  final String full_name;
   final String role;
 
-  User({required this.fio, required this.role});
+  User({required this.full_name, required this.role});
 }
 
 User? user;

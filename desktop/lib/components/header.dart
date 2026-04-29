@@ -92,7 +92,7 @@ class DropDown extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(user!.fio, style: TextStyle(fontSize: 14)),
+                Text(user!.full_name, style: TextStyle(fontSize: 14)),
                 Text(
                   user!.role,
                   style: TextStyle(fontSize: 12, color: Colors.grey),

@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       setToken(res.data['data']['token']);
       final user = User(
-        fio: res.data['data']['user']['fio'],
+        full_name: res.data['data']['user']['full_name'],
         role: res.data['data']['user']['role'],
       );
       setUser(user);

@@ -16,7 +16,7 @@ public class ProductsController(AppDb db) : ControllerBase
         Ok(new ApiResponse<List<Product>> { Data = db.Products.ToList() });
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult Get(Guid id)
     {
         var product = db.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound(new ApiResponse<Product> { Error = "Продукт не найден" });
@@ -32,23 +32,18 @@ public class ProductsController(AppDb db) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Product p)
+    public IActionResult Update(Guid id, Product p)
     {
         var product = db.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound(new ApiResponse<Product> { Error = "Продукт не найден" });
 
-        product.Name = p.Name;
-        product.Description = p.Description;
-        product.Price = p.Price;
-        product.Count = p.Count;
-        product.MinCount = p.MinCount;
-        product.Tendetion = p.Tendetion;
+        db.Products.Update(p);
         db.SaveChanges();
         return Ok(new ApiResponse<Product> { Data = product, Message = "Продукт обновлён" });
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
         var product = db.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound(new ApiResponse<Product> { Error = "Продукт не найден" });
