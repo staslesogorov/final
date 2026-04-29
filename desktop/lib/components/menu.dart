@@ -49,7 +49,10 @@ class _MenuState extends State<Menu> {
                   name: e.key,
                   icon: e.value[0],
                   open: open,
-                  onTap: () => widget.onSelect(e.key),
+                  onTap: () {
+                    print(e.key);
+                    widget.onSelect(e.key);
+                  },
                   openable: e.value[1],
                 ),
               )
@@ -85,65 +88,61 @@ class _MenuItemState extends State<MenuItem> {
 
   @override
   Widget build(BuildContext context) {
+    final onTap = widget.openable
+        ? () => setState(() => subOpen = !subOpen)
+        : widget.onTap;
     return GestureDetector(
-      onTap: widget.onTap,
-      child: GestureDetector(
-        onTap: () => {
-          setState(() {
-            if (widget.openable) subOpen = !subOpen;
-          }),
-        },
-        child: Column(
-          children: [
-            Row(
-              spacing: 20,
+      onTap: onTap,
+      child: Column(
+        children: [
+          Row(
+            spacing: 20,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(widget.icon, color: Colors.white),
+              if (widget.open)
+                Text(
+                  widget.name,
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              if (widget.openable && widget.open)
+                Icon(
+                  subOpen
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_right,
+                  color: Colors.white,
+                ),
+            ],
+          ),
+          if (subOpen && widget.open)
+            Column(
+              spacing: 10,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(widget.icon, color: Colors.white),
-                if (widget.open)
-                  Text(
-                    widget.name,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                if (widget.openable && widget.open)
-                  Icon(
-                    subOpen
-                        ? Icons.keyboard_arrow_down
-                        : Icons.keyboard_arrow_right,
-                    color: Colors.white,
-                  ),
-              ],
-            ),
-            if (subOpen && widget.open)
-              Column(
-                spacing: 10,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: subItems[widget.name]!
-                    .map(
-                      (e) => GestureDetector(
-                        onTap: () => widget.onTap(),
-                        child: Row(
-                          spacing: 20,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              e,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white70,
-                              ),
+              children: subItems[widget.name]!
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: () => widget.onTap(),
+                      child: Row(
+                        spacing: 20,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white70,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    )
-                    .toList(),
-              ),
-          ],
-        ),
+                    ),
+                  )
+                  .toList(),
+            ),
+        ],
       ),
     );
   }

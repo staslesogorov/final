@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:desktop/api.dart';
 import 'package:desktop/user.dart';
 import 'package:flutter/material.dart';
@@ -98,9 +96,9 @@ class DropDown extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(user!.fullName, style: TextStyle(fontSize: 14)),
+                Text(user.fullName, style: TextStyle(fontSize: 14)),
                 Text(
-                  user!.role,
+                  user.role,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
