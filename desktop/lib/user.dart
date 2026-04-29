@@ -1,8 +1,9 @@
 class User {
-  final String full_name;
+  final String fullName;
   final String role;
+  final String photo;
 
-  User({required this.full_name, required this.role});
+  User({required this.fullName, required this.role, required this.photo});
 }
 
 User? user;

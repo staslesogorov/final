@@ -1,11 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:desktop/api.dart';
 import 'package:desktop/user.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-  const Header({super.key, this.user});
+  const Header({super.key, required this.user});
 
-  final User? user;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +47,13 @@ class HeaderTitle extends StatelessWidget {
 class DropDown extends StatelessWidget {
   const DropDown({super.key, required this.user});
 
-  final User? user;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
+    final cleaned = user.photo.split(',').last;
+    final icon = base64Decode(cleaned);
+
     return Container(
       decoration: BoxDecoration(
         border: Border(left: BorderSide(color: Colors.grey)),
@@ -88,11 +94,11 @@ class DropDown extends StatelessWidget {
         child: Row(
           spacing: 10,
           children: [
-            Icon(Icons.flag),
+            Image.memory(icon, width: 30, height: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(user!.full_name, style: TextStyle(fontSize: 14)),
+                Text(user!.fullName, style: TextStyle(fontSize: 14)),
                 Text(
                   user!.role,
                   style: TextStyle(fontSize: 12, color: Colors.grey),

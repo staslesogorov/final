@@ -9,8 +9,8 @@ final Map<String, List> navItems = {
 };
 
 final Map<String, List> subItems = {
-  "Детальный отчеты": [],
-  "Учет ТМЦ": [],
+  "Детальный отчеты": ["Детальный отчеты"],
+  "Учет ТМЦ": ["Учет ТМЦ"],
   "Администрирование": [
     "Торговые автоматы",
     "Компании",
@@ -115,26 +115,29 @@ class _MenuItemState extends State<MenuItem> {
                   ),
               ],
             ),
-            if (subOpen)
+            if (subOpen && widget.open)
               Column(
                 spacing: 10,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: subItems[widget.name]!
                     .map(
-                      (e) => Row(
-                        spacing: 20,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white70,
+                      (e) => GestureDetector(
+                        onTap: () => widget.onTap(),
+                        child: Row(
+                          spacing: 20,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              e,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     )
                     .toList(),

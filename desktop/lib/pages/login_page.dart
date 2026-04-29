@@ -23,8 +23,9 @@ class _LoginPageState extends State<LoginPage> {
       );
       setToken(res.data['data']['token']);
       final user = User(
-        full_name: res.data['data']['user']['full_name'],
+        fullName: res.data['data']['user']['fullName'],
         role: res.data['data']['user']['role'],
+        photo: res.data['data']['user']['photo'],
       );
       setUser(user);
       Navigator.pushReplacementNamed(context, '/home');
