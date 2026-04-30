@@ -1,8 +1,14 @@
+import 'dart:math';
+import 'package:desktop/api.dart';
+import 'package:desktop/pages/main/effectivnost_seti.dart';
+import 'package:desktop/pages/main/sosstoyanie_seti.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:graphic/graphic.dart';
 
 final Map<String, Widget> items = {
-  "Эффективность сети": Text("Эффективность сети"),
-  "Состояние сети": Text("Состояние сети"),
+  "Эффективность сети": EffectivnpostSeti(),
+  "Состояние сети": SosstoyanieSeti(),
   "Сводка": Text("Сводка"),
   "Динамика продаж за последние 10 дней": Text(
     "Динамика продаж за последние 10 дней",

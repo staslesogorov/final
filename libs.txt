@@ -12,6 +12,7 @@ IntelliCode for C# Dev Kit
 
 Flutter
 dio
+graphic
 
 C#
 Microsoft.EntityFrameworkCore

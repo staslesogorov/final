@@ -23,6 +23,7 @@ public class AuthController(AppDb db) : ControllerBase
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertyuiopasdfghjklzxcvbnmqwerty"));
         var token = new JwtSecurityToken(
+            expires: DateTime.UtcNow.AddHours(24),
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
         return Ok(new ApiResponse<Object> {  Data = new { token = new JwtSecurityTokenHandler().WriteToken(token), user = user }, Message = "Успешный вход" });
