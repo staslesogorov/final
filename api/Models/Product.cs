@@ -13,7 +13,7 @@ namespace api.Models
         public decimal Price {get;set;}
         public int Count {get;set;}
         public int MinCount {get;set;}
-        public int Tendetion {get;set;}
+        public decimal Tendetion {get;set;}
 
         public Guid VendingMachineId {get;set;}
         public VendingMachine? VendingMachine {get;set;}

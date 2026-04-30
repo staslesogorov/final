@@ -49,8 +49,9 @@ class DropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cleaned = user.photo.split(',').last;
-    final icon = base64Decode(cleaned);
+    final icon = base64Decode(
+      user.photo.contains(',') ? user.photo.split(',').last : user.photo,
+    );
 
     return Container(
       decoration: BoxDecoration(
