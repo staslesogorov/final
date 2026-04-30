@@ -40,7 +40,7 @@ class _EffectivnpostSetiState extends State<EffectivnpostSeti> {
       children: [
         SizedBox(
           width: 200,
-          height: 110,
+          height: 200,
           child: Chart(
             data: [
               {'t': 'Работает', 'v': work},
