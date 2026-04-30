@@ -26,12 +26,3 @@ class InventoryPage extends StatelessWidget {
     return Scaffold(appBar: AppBar(title: Text("Учет ТМЦ")));
   }
 }
-
-class AdminPage extends StatelessWidget {
-  const AdminPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Администрирование")));
-  }
-}

@@ -12,6 +12,7 @@ class EffectivnpostSeti extends StatefulWidget {
 
 class _EffectivnpostSetiState extends State<EffectivnpostSeti> {
   int all = 0, work = 0;
+  bool loaded = false;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _EffectivnpostSetiState extends State<EffectivnpostSeti> {
       setState(() {
         all = d.length;
         work = d.where((m) => m['status'] != 'Сломан').length;
+        loaded = true;
       });
     } on DioException catch (e) {}
   }
@@ -41,34 +43,36 @@ class _EffectivnpostSetiState extends State<EffectivnpostSeti> {
         SizedBox(
           width: 200,
           height: 200,
-          child: Chart(
-            data: [
-              {'t': 'Работает', 'v': work},
-              {'t': 'Нет', 'v': all - work},
-            ],
-            variables: {
-              't': Variable(accessor: (Map m) => m['t'] as String),
-              'v': Variable(
-                accessor: (Map m) => m['v'] as num,
-                scale: LinearScale(marginMin: 0, marginMax: 0),
-              ),
-            },
-            marks: [
-              IntervalMark(
-                color: ColorEncode(
-                  variable: 't',
-                  values: [Colors.green, Colors.red],
+          child: !loaded
+              ? Center(child: CircularProgressIndicator())
+              : Chart(
+                  data: [
+                    {'t': 'Работает', 'v': work},
+                    {'t': 'Нет', 'v': all - work},
+                  ],
+                  variables: {
+                    't': Variable(accessor: (Map m) => m['t'] as String),
+                    'v': Variable(
+                      accessor: (Map m) => m['v'] as num,
+                      scale: LinearScale(marginMin: 0, marginMax: 0),
+                    ),
+                  },
+                  marks: [
+                    IntervalMark(
+                      color: ColorEncode(
+                        variable: 't',
+                        values: [Colors.green, Colors.red],
+                      ),
+                      modifiers: [StackModifier()],
+                    ),
+                  ],
+                  coord: PolarCoord(
+                    transposed: true,
+                    dimCount: 1,
+                    startAngle: pi,
+                    endAngle: 2 * pi,
+                  ),
                 ),
-                modifiers: [StackModifier()],
-              ),
-            ],
-            coord: PolarCoord(
-              transposed: true,
-              dimCount: 1,
-              startAngle: pi,
-              endAngle: 2 * pi,
-            ),
-          ),
         ),
         Text('Работающих автоматов ${work / all * 100}%'),
       ],
